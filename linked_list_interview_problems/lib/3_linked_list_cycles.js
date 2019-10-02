@@ -16,57 +16,28 @@
 // (1) Your function must run in linear time, O(n).
 // (2) Your function must use constant space, O(1).
 // (3) Do not mutate the linked list or it's nodes in any way.
+
+// Given the class definition of our linked list, we can use the length to our advantage
+// Simply traverse the list for the length of the list, and if the last node doesn't point to null, there must be a cycle
+// Runtime O(n) where n is the length of the list
+// Space O(1)
 // 
-// ------------
-// Explanation:
-// ------------
-//
-// In general, we assume that a linked list is said to "terminate" at it's tail.
-// This means that the linked list's tail should have a next pointer that points
-// to null. For example:
-// 
-//                           A → B → C → D → E → null
-// 
-// A "cycle" occurs when there exists a node in the list whose next pointer
-// points to a node that appeard previously in the list. Traversing a cyclical
-// list results in an infinite loop, where one visits the same nodes (those
-// LinkedIn to the cycle...see what I did there? :P) again and again.
-//
-// --------
-// Example:
-// --------
-//
-// Let's create the following linked list with a four-node cycle:
-//
-//                         A → B → C
-//                             ↑   ↓
-//                             E ← D
-// 
-// const linkedList = new LinkedList();
-// let secondNode;
-//
-// linkedList.addToTail('A');
-// linkedList.addToTail('B');
-// linkedList.addToTail('C');
-// linkedList.addToTail('D');
-// linkedList.addToTail('E');
-// hasCycle(linkedList);               => false
-//
-// secondNode = linkedList.get(1);
-// linkedList.tail.next = secondNode;
-// hasCycle(linkedList);               => true
-//
-// -----------
-// Let's code!
-// -----------
+// Usually, the linked list will not give you length, then:
+// Traverse the linked list, adding each node to a set
+// If tail node can be reached there is no cycle
+// If a node appears in set there is a cycle
+// Runtime O(n) where n is the list length
+// Space O(n) where n is the list length
+  // For both analyses, the worst case is that every node is touched once and there is no cycle
 function hasCycle(linkedList) {
-  // TODO: Implement the hasCycle function!
+  // Traverse linked list
   let node = linkedList.head;
   let i = 1;
   while (i < linkedList.length) {
     node = node.next;
     i++;
   }
+  // Return whether the tail was reached
   return node.next ? true : false;
 }
 

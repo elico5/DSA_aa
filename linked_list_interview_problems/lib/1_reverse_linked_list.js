@@ -17,62 +17,29 @@
 //
 // (1) Your function must run in linear time, O(n).
 // (2) You must reverse the list *in place*. (i.e. Use constant space, O(1).)
-//
-// ------------
-// Explanation:
-// ------------
-//
-// Given the following linked list:
-//
-//   First → Second → Third → Fourth → Fifth → null
-//
-// Should be mutated into the following list:
-//
-//   Fifth → Fourth → Third → Second → First → null
-//
-// This must be done without instantiating a NEW instance of a LinkedList.
-// You must do reverse the list in place, by mutating the original input.
-//
-// --------
-// Example:
-// --------
-//
-// const linkedList = new LinkedList();
-// linkedList.addToTail('First');
-// linkedList.addToTail('Second');
-// linkedList.addToTail('Third');
-// linkedList.addToTail('Fourth');
-// linkedList.addToTail('Fifth');
-//
-// Current List:  First → Second → Third → Fourth → Fifth → null
-//
-// const result = reverseLinkedList(root);
-//
-// Mutated List:  Fifth → Fourth → Third → Second → First → null
-//
-// result.head.value            => 'Fifth'
-// result.head.next.value       => 'Fourth'
-// result.tail.value            => 'First'
-// result.tail.value.next       =>  null
-//
-// The old head is now the terminal node!
-//
-// -----------
-// Let's code!
-// -----------
+
+// Traverse the linked list once to maintain O(n) runtime
+// O(1) space achieved via 3 pointers during traversal
 function reverseLinkedList(linkedList) {
-  // TODO: Implement the reverseLinkedList function!
+  // Empty or single node list is already reversed
   if (linkedList.length <= 1) return linkedList;
+  // Initialize pointers
   let prev = linkedList.head;
   let curr;
   let next = linkedList.head.next;
+  // First node points to null
   prev.next = null;
   while (next !== null) {
+    // Current node being operated on is next in line
     curr = next;
+    // Next node to be operated on is after current node
     next = curr.next;
+    // Current node now points to what was before it
     curr.next = prev;
+    // Previous node reassigned for next iteration
     prev = curr;
   }
+  // Swap class head/tail pointers
   [linkedList.tail, linkedList.head] = [linkedList.head, linkedList.tail];
   return linkedList;
 }

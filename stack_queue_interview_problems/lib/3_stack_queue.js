@@ -19,13 +19,21 @@
 //   - Enqueue
 //   - Dequeue
 //   - Size
-//
-// -----------
-// Let's code!
-// -----------
+
+// To implement a queue using two stacks, we must allocate an enqueue stack as well as a dequeue stack...
+// When enqueueing into the queue, we push elements to the enqueue stack
+// When dequeueing from the queue, we check if the dequeue stack is empty...
+// If the dequeue stack is empty, we must pop elements from the enqueue stack and push them to the dequeue stack until the enqueue stack is empty...
+// When the dequeue stack is not empty, we simply pop off of it to dequeue an element from the queue
+// 
+// Runtime is amortized O(1) for operations (we will focus on dequeue), to see this, we consider the worst case with a queue consisting of n elements
+// If all elements are in the enqueue stack, we must move all elements to the dequeue stack before we can dequeue an element
+// This will result in O(n) operations to make one dequeue, but all subsequent dequeue operations will be constant time,
+// since the dequeue stack will not be empty
+// 
+// Space is O(n)... despite the use of two arrays as stacks, n elements are allocated between the two where n is the number of elements in the stack queue
 
 class Node {
-    // TODO: Implement the Node class!
     constructor(value) {
         this.value = value;
         this.next = null;
@@ -33,7 +41,6 @@ class Node {
 }
 
 class Stack {
-    // TODO: Implement the Stack class!
     constructor() {
         this.top = null;
         this.bottom = null;
@@ -71,7 +78,6 @@ class Stack {
 }
 
 class StackQueue {
-    // TODO: Implement the StackQueue class!
     constructor() {
         this.inStack = new Stack();
         this.outStack = new Stack();

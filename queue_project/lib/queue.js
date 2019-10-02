@@ -1,24 +1,9 @@
 // ============================================================================
 // Implementation Exercise: Queue
 // ============================================================================
-//
-// -------
-// Prompt:
-// -------
-//
-// Implement a Queue and all of its methods below!
-//
-// ------------
-// Constraints:
-// ------------
-//
-// Make sure the time and space complexity of each is equivalent to those 
-// in the table provided in the Time and Space Complexity Analysis section
-// of your Stack reading!
-//
-// -----------
-// Let's Code!
-// -----------
+
+// Using list nodes allows for O(1) dequeue operation
+// Using an array is O(n) as each element in queue must be shifted forwards
 
 class Node {
     constructor(value) {

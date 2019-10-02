@@ -9,49 +9,31 @@
 // Write a function linkedListIntersection that returns the node at which the 
 // intersection of two linked lists begins, or null if there is no such 
 // intersection.
-//
-// ---------- 
-// Example 1:
-// ----------
-// 
-// Given the following two linked lists, list1 and list2, 
-// linkedListIntersection(list1,list2) should return D 
-// as the node of intersection.
-// 
-//    A → B → C
-//             ↘
-//               D → E → F
-//             ↗
-//        X → Y
-//
-// ---------- 
-// Example 2:
-// ----------
-//
-// Given the following two linked lists, list1 and list2, 
-// linkedListIntersection(list1, list2) should return null 
-// as there is no point of intersection.
-// 
-//    A → B → C → D
-//
-//    X → Y → Z
-// 
-// -----------
-// Let's code!
-// -----------
+
+// If there was guaranteed to be in intersection, could achieve in constant space.
+  // Cycle two pointers until they point to the same node and return it
+// Since there can be no intersection, we must track all nodes we've visited
+// Thus, just traverse one link and track unique identifiers for each node
+// Then, traverse second list and return first node that appears in set
+// Runtime O(m + n) where m and n are the list lengths
+// Space O(m) where m is the length of one list... a set is being used to track data
 function linkedListIntersection(list1, list2) {
-  // TODO: Implement the hasCycle function!
+  // Initialize set
   const set = new Set();
+  // Traverse list1, adding nodes to set
   let node = list1.head;
   while (node.next) {
     set.add(node);
     node = node.next;
   }
+  // Traverse list2
   node = list2.head;
   while (node.next) {
+    // Return first node found in set
     if (set.has(node)) return node;
     node = node.next;
   }
+  // No intersection node was found
   return null;
 }
 

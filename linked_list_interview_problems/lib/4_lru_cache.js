@@ -23,39 +23,15 @@
 //
 // NOTE: We determine the item that is "Least Recently Used" by its most-recent
 // "get" time, not just by its creation time!
+
+// Basically, to create an LRU Cache, we combine the hash map data structure with a doubly linked list
+// This allows for O(1) lookup, insertion, deletion, and promotion
+// Store cache items (keys, values) in a hash map, and each cache item has a node reference
+// If the cache item is accessed, it's node reference is pushed to the front of our linked list
+// If a cache item is inserted, the least used item in the list is removed, and a new item is created and pushed to front
 //
-// --------
-// Example:
-// --------
-//
-// const lruCache = new LRUCache(4);   => limit of 4 items
-// lruCache.set('a', 'A');
-// lruCache.set('b', 'B');
-// lruCache.set('c', 'C');
-// lruCache.set('d', 'D');
-// lruCache.set('e', 'E');
-//
-// lruCache.get('c')                   => 'C'
-// lruCache.get('b')                   => 'B'
-//
-// Item 'a' was removed because it was the oldest item by insertion/usage
-//
-// lruCache.get('a')                   => null
-//
-// Next, item 'e' is removed to make room, because it is the oldest by usage,
-// which takes priority.
-//
-// lruCache.set('f', 'F');
-//
-// Item 'd' is also removed, because it was retrieved before item 'b' was
-// last retrieved.
-//
-// lruCache.set('g', G);
-//
-// -----------
-// Let's code!
-// -----------
-// TODO: Implement the LRUCacheItem class here
+// Briefly: a hash map allows for constant key value look up
+// Briefly: a doubly linked list allows for constant adjustment of relative orders of use recency for items in cache
 class LRUCacheItem {
   constructor(val = null, key = null) {
     this.val = val;
@@ -64,46 +40,40 @@ class LRUCacheItem {
   }
 }
 
-// TODO: Implement the LRUCacheItem class here
 class LRUCache {
   constructor(limit) {
+    // Hash map to track cache items
     this.items = {};
-
+    // Doubly Linked List to track ordering of cache items
     this.ordering = new List();
-
     this.limit = limit;
     this.length = 0;
   }
 
-  // TODO: Implement the size method here
   size() {
     return this.length;
   }
 
-  // TODO: Implement the get method here
   get(key) {
     if (!this.items[key]) return null;
-
     const item = this.items[key];
+    // Promote the item as it was recently used
     this.promote(item);
-
     return item.val;
   }
 
-  // TODO: Implement the set method here
   set(key, val) {
     let item;
-    // Set an existing item
+    // Set an existing item (item with that key exists already)
     if (this.items[key]) {
       item = this.items[key];
       item.val = val;
+      // Refresh ordering
       this.promote(item);
-
-      // Set a new item
     } else {
+      // Set a new item (no item exists at that key)
       // Make space if necessary
       if (this.isFull()) this.prune();
-
       item = new LRUCacheItem(val, key);
       item.node = this.ordering.unshift(item);
       this.items[key] = item;
@@ -116,12 +86,16 @@ class LRUCache {
   }
 
   prune() {
+    // Remove oldest element from list
     const oldest = this.ordering.pop();
+    // Delete item that exists in cache at that key
     delete this.items[oldest.key];
+    // Decrement length
     this.length = Math.max(0, this.length - 1);
   }
 
   promote(item) {
+    // Move node for item to front of linked list
     this.ordering.moveToFront(item.node);
   }
 }

@@ -23,47 +23,10 @@
 // ------------
 //
 // (1) All MinMaxStack methods must run in constant time, O(1).
-//
-//
-// --------
-// Example:
-// --------
-//
-// const minMaxStack = new MinMaxStack();
-//
-// minMaxStack.push(10);
-// minMaxStack.push(12);
-// minMaxStack.push(8);
-// minMaxStack.push(2);
-// minMaxStack.push(20);
-//
-// console.log(minMaxStack.min().value);   => 2
-// console.log(minMaxStack.max().value);   => 20
-//
-// minMaxStack.pop();
-// console.log(minMaxStack.min().value);   => 2
-// console.log(minMaxStack.max().value);   => 12
-//
-// minMaxStack.pop();
-// console.log(minMaxStack.min().value);   => 8
-// console.log(minMaxStack.max().value);   => 12
-//
-// minMaxStack.pop();
-// console.log(minMaxStack.min().value);   => 10
-// console.log(minMaxStack.max().value);   => 12
-//
-// minMaxStack.pop();
-// console.log(minMaxStack.min().value);   => 10
-// console.log(minMaxStack.max().value);   => 10
-//
-// minMaxStack.pop();
-// console.log(minMaxStack.min());   => null
-// console.log(minMaxStack.max());   => null
-//
-//
-// -----------
-// Let's code!
-// -----------
+
+// To implement a MixMaxStack, simply track the minimum and maximum at insertion for each node/element...
+// Then, the minimum and maximum of the entire stack are encoded in the top element
+// Code below uses nodes to allow for stack elements to carry data references with ease
 class Node {
     constructor(val) {
         this.value = val;
@@ -73,7 +36,6 @@ class Node {
     }
 }
 
-// Refactor the regular Stack below into a MinMaxStack!
 class MinMaxStack {
     constructor() {
         this.top = null;
@@ -124,6 +86,5 @@ class MinMaxStack {
     }
 }
 
-// Forgetting something down here? 
 exports.Node = Node;
 exports.MinMaxStack = MinMaxStack;

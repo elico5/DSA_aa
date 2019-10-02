@@ -37,64 +37,41 @@
 //
 // (1) Your function must run in linear time, O(n).
 // (2) Your function must consume (at maximum) linear space, O(n).
-//
-// ---------------------------
-// Example 1: Parentheses Only
-// ---------------------------
-//
-// balancedParens('(');          => false
-// balancedParens('()');         => true
-// balancedParens(')(');         => false
-// balancedParens(')()())');     => false
-// balancedParens('((()()))');   => true
-//
-// -----------------------------
-// Example 2: Parentheses + Text
-// -----------------------------
-//
-// balancedParens('var x = Math.floor(2.5)');             => true
-// balancedParens('var y = (((x + 5)/6) + 2*(x + 10))');  => true
-// balancedParens('var z = ()(x + 5)/6) + 2*(x + 10))');  => false
-//
-// -----------------------
-// Example 3: All Brackets
-// -----------------------
-//
-// balancedParens('()[]{}');     => true
-// balancedParens('[{()}]');     => true
-// balancedParens('[{])({)[}');  => false
-//
-// ------------------------------
-// Example 4: All Brackets + Text
-// ------------------------------
-//
-// balancedParens('const roundDown = function(num) { return Math.floor(num) };');      => true
-// balancedParens('{ array: [1, 2, [3, 4], 5], timesTwoMethod: (num) => num * 2; }');  => true 
-// balancedParens('function printThirdElement(array) { console.log(array[3]]] }');     => false 
-//
-// -----------
-// Let's code!
-// -----------
+
+// Runtime O(n)... input string is traversed once
+// Space O(n)... worst case being something like (((((()))))) which would fill stack maximally
+// 
+// Strategy: loop through string...
+// If you come across an open character add it to stack,
+// If you come across closing character you must be able to pop the corresponding opening character off the stack
 function balancedParens(str) {
+    // Base case
     if (!str.length) return true;
+    // Relation between open and close
     const map = {
         '}': '{',
         ')': '(',
         ']': '['
     };
+    // Allow for open character constant lookup
     const open = new Set(Object.values(map));
+    // Initialize array to use as a stack
     const stack = [];
     [...str].forEach(char => {
         if (open.has(char)) {
+            // Push open character to stack
             stack.push(char);
         } else if (char in map) {
+            // Character closes associated open character
             if (stack[stack.length - 1] === map[char]) {
                 stack.pop();
             } else {
+                // Character is unresolved
                 stack.push(char);
             }
         }
     })
+    // Empty stack implies validity (all open characters were closed)
     return stack.length ? false : true;
 }
 
