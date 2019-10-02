@@ -1,3 +1,5 @@
+// Trees are inherently recursive
+// In-order traversal traverses the left subtree before the root and then the right subtree
 function inOrderArray(root) {
     let fill = [];
     if (root) {
@@ -8,6 +10,7 @@ function inOrderArray(root) {
     return fill;
 }
 
+// Post-order traversal traverses the left subtree, then the right subtree, then the root
 function postOrderArray(root) {
     let fill = [];
     if (root) {
