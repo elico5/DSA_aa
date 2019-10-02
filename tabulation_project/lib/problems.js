@@ -3,8 +3,10 @@
 // The function should return a boolean indicating if it is possible to travel from the 
 // first position of the array to the last position.
 function stepper(nums) {
+    // Initialize table with final position as true
     const table = Array(nums.length).fill(false);
     table[table.length - 1] = true;
+    // Work backwards and mark indices as true if you can reach final position from them
     for (let i = nums.length - 2; i >= 0; i--) {
         for (let j = 1; j <= nums[i]; j++) {
             if (table[i + j]) {
@@ -20,10 +22,12 @@ function stepper(nums) {
 // The function should return the maximum sum of elements in the array we can get if we cannot take
 // adjacent elements into the sum.
 function maxNonAdjacentSum(nums) {
-    if (nums.length === 0 ) return 0;
+    if (nums.length === 0) return 0;
+    // Initialize table and first two elements
     const table = Array(nums.length).fill(0);
     table[0] = nums[0];
     table[1] = Math.max(nums[0], nums[1]);
+    // Iterate through the table and assign maximum sum by non-adjacent constraint
     for (let i = 2; i < nums.length; i++) {
         table[i] = Math.max(nums[i] + table[i - 2], table[i - 1])
     }
@@ -34,8 +38,11 @@ function maxNonAdjacentSum(nums) {
 // and a target amount as arguments. The method should the minimum number of coins needed
 // to make the target amount. A coin value can be used multiple times.
 function minChange(coins, amount) {
+    // Initialize table, 0 coins makes 0 change
     const table = Array(amount + 1).fill(Infinity);
     table[0] = 0;
+    // Looping through coins, assign minimum number of coins to create amount
+    // Table values get reassigned if less coins are used
     coins.forEach(coin => {
         for (let i = coin; i <= amount; i++) {
             const count = 1 + table[i - coin];

@@ -5,7 +5,7 @@
 // n is the number of coins and m is the amount). Additionally, time complexity is
 // proportional to n * n * m? (looping to find combination count for each unique combination of coins and amount)
 var change = function (amount, coins, memo = {}) {
-    // Only one way to make 0 chang
+    // Only one way to make 0 change
     if (amount === 0) return 1;
     // Generate unique key based on considered coins and amount
     const key = amount + '-' + coins;
