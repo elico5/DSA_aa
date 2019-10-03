@@ -1,3 +1,4 @@
+// Heap class just holds reference to an array that stores the heap
 class MaxHeap {
     constructor() {
         this.array = [ null ];
@@ -19,17 +20,23 @@ class MaxHeap {
         const child = this.array[idx];
         const parentIdx = this.getParent(idx)
         const parent = this.array[parentIdx];
+        // If heap rule is violated swap child with parent
         if (child > parent && parentIdx > 0) {
             [this.array[idx], this.array[parentIdx]] = [parent, child];
+            // Check if heap rule is violated again after swap
             this.siftUp(parentIdx);
         }
     }
 
+    // O(log(n)) runtime... worst case a node has to be sifted up the height of the tree
+    // Add to right most leaf and check if heap rule is violated
     insert(val) {
         this.array.push(val);
         this.siftUp(this.array.length - 1);
     }
 
+    // O(log(n)) runtime... worst case a node has to be sifted down the height of the tree
+    // Node must be swapped down with the greater of its children otherwise heap rule remains violated
     siftDown(idx) {
         const parent = this.array[idx];
         const lChildIdx = this.getLeftChild(idx);
@@ -47,6 +54,8 @@ class MaxHeap {
         }
     }
 
+    // Move right most leaf to root position and sift down until heap rule is satisfied
+    // Hold reference to max
     deleteMax() {
         if (this.array.length === 1) {
             return null;

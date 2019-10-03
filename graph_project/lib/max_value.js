@@ -1,3 +1,6 @@
+// Similarly, used a BFS to find the maximum value
+// Note:
+// DFS could be used additionally, so long as the max value is returned by the function, and the visited set is passed around to recursive calls
 function maxValue(node, visited=new Set()) {
     let maxValue = node.val;
     const queue = [ node ];
